@@ -1,10 +1,10 @@
 # Report of Project 1 (Malloc Library)
 
-### Yuguo(Harry) Wang                  &emsp;   NetID: yw540
+### Yuguo(Harry) Wang             &emsp;     &emsp;   NetID: yw540
   
     
     
-
+<br>
 
 
 ### Data Structure
