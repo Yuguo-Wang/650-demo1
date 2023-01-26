@@ -1,4 +1,4 @@
-### Report of Project 1 (Malloc Library)
+# Report of Project 1 (Malloc Library)
 
 ### Yuguo(Harry) Wang      NetID:yw540
 
