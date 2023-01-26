@@ -93,7 +93,7 @@ A global data called `data_segment_free_size` and set it to 0 at beginning. At l
 
 ##### Equal size
 
-There should be no difference between first fit and best fit for equal_size. Since all blocks are in equal size, the best fit should also be the first fit. Because all free spaces are in same size, the first block in the linked list will be enough for the requested space, we do not need to search through the whole linked list, therefore, the time for equal_size is quite short.
+There should be no difference between first fit and best fit for equal_size. Since all blocks are in equal size, the best fit should also be the first fit. Because all free spaces are in same size, the first block in the linked list will be enough for the requested space, we do not need to search through the whole linked list, therefore, the time for equal_size is quite short, and it takes similar time between first fit and best fit, because it's much more easier to find the block in same blockSize.
 
 ##### Fragmentation is better for best fit
 
@@ -106,5 +106,3 @@ Overall, large size will take more time than small size, which is easy to find.
 For larger size, best fit take longer time but it is opposite for small size. This is because best fit usually search the whole linked list, whereas since best fit takes good use of spacem, which saves time in total, to some degree. 
 
 In contrast, first fit saves time at a single search, however it will split the space and causes that no space could be used in the linked list at the end. Therefore, it will result in a situation that we have to search the whole linked list every time and then ask for allocating new space.
-
-For the equal size, which is explained above, it's much more easier to find the block in same blockSize. And that is why we find that it will take shorter time.
