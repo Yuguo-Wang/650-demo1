@@ -39,15 +39,16 @@ Search the whole linked list, choose the Block whose datasize is the smallest am
 
 ### Split and Remove
 
-If we find a Node whose datasize is bigger than requested size, we need to edit the linked list to show the change. There are two situations here:
+If we find a block whose blockSize is bigger than requested size, we need to change the freelist. 
+There are two situations here:
 
 * `block->blockSize <= sizeof(block) + size`
 
-When datasize is smaller than the size of metadata and requested size, we need to remove the Node, because after allocating the space out, the left space will not be enough to store metadata, no need to say actual data.
+If blockSize is smaller than the size of metadata plus requested size, we need to remove the block, because the left space will not be enough to store metadata plus newblock->blockSize.
 
 * `block->blockSize > sizeof(block) + size`
 
-When datasize is larger than the size of metadata and requested size, we need to spilt this block (block->blockSize -= sizeof(block) + size) because after allocating out the space, the left space will still be large enough to store metadata and actual data. And then, we need to remove the splitted space.
+If blockSize is bigger than the size of metadata plus requested size, we need to spilt this block (block->blockSize -= sizeof(block) + size) because after allocating out the space, the left space will still be large enough to store metadata and actual data, And then, we need to remove the splitted space.
 
 The whole process is to split the block first, which is similar to adding a new block into the linkedlist, and then we remove the block which is needless. 
 
