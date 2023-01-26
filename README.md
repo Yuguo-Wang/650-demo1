@@ -12,7 +12,7 @@
 
 Implemented a Double LinkedList to store free block.
 
-Each block in the free list contains a metadata and the space for actual data space(block->blockSize). 
+Each block in the free list contains a metadata and the space for actual data space `block->blockSize`. 
 
 The way of manage the Linkedlist is to let the block points to the start of metadata.
 
@@ -20,7 +20,7 @@ Block contains
 
 * `block * next`: A pointer to next block (start of metadata)
 * `block * prev`: A pointer to prev block (start of metadata)
-* `size_t blockSize`: describe how much size the space is.
+* `size_t blockSize`: Describe how much size the space is.
 
 
 ### Allocate
@@ -50,7 +50,7 @@ If blockSize is smaller than the size of metadata plus requested size, we need t
 
 * `block->blockSize > sizeof(block) + size`
 
-If blockSize is bigger than the size of metadata plus requested size, we need to spilt this block (block->blockSize -= sizeof(block) + size) because after allocating out the space, the left space will still be large enough to store metadata and actual data, And then, we need to remove the splitted space.
+If blockSize is bigger than the size of metadata plus requested size, we need to spilt this block `block->blockSize -= sizeof(block) + size` because after allocating out the space, the left space will still be large enough to store metadata and actual data, And then, we need to remove the splitted space.
 
 The whole process is to split the block first, which is similar to adding a new block into the linkedlist, and then we remove the block which is needless. 
 
@@ -65,26 +65,22 @@ There is no different between first fit free and best fit free.
 ### User and Manage point 
 For malloc, we have to make sure that, the return point should be the point for user, which is `(void*)ptr + sizeof(block)`；For free, the argument point comes from user, and we need to manage the point by `(void*)ptr - sizeof(block)`
 
-<br>
-<br>
-
 
 ### Study of Performance Policy
 
-<br>
 #### data_segment_size
 
-A global variable called `data_segment_size` and set it to 0 at beginning. Add sizeof(block) + size to it everytime calling `sbrk()`. 
+A global variable called `data_segment_size` and set it to 0 at beginning. Add `sizeof(block) + size` to it everytime calling `sbrk()`. 
 
 #### data_segment_free_space_size
 
-A global data called `data_segment_free_size` and set it to 0 at beginning. At last, search the freelist and add sizeof(block) + currBlock->blockSize to it from every block.
+A global data called `data_segment_free_size` and set it to 0 at beginning. At last, search the freelist and add `sizeof(block) + currBlock->blockSize` to it from every block.
 
 
-<br>
-<br>
 ### Analysis of Performance
-<br>
+
+
+
 #### Results
 
 #NUM_ITERs 100 for small, 10000 for equal, 50 for large
