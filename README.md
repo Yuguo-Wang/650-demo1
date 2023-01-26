@@ -1,10 +1,12 @@
-##### Report of Project 1 (Malloc Library)
+### Report of Project 1 (Malloc Library)
 
-##### Yuguo(Harry) Wang      NetID:yw540
+### Yuguo(Harry) Wang      NetID:yw540
 
 
 
-##### Data Structure
+
+
+### Data Structure
 
 Implemented a Double LinkedList to store free block.
 
@@ -19,23 +21,23 @@ Block contains
 * `size_t blockSize`: describe how much size the space is.
 
 
-##### Allocate
+### Allocate
 
 Call `sbrk` in liunx environment
 
-##### Malloc
+### Malloc
 
 When malloc, if there is no headBlock, we need allocate a space for the headBlock. Then, we search the linked list. If there is a block founded whose datasize is bigger than requested size, we could allocate space out from free space and do "split" and "remove" , otherwise, we need to call `sbrk()` to ask for more space, which is to add the new block behind the linkedlist.
 
-##### First Fit
+### First Fit
 
 Stop searching as soon as we find a Block whose datasize is bigger than size that users give, if no block satisfies, allocate a new space.
 
-##### Best Fit
+### Best Fit
 
 Search the whole linked list, choose the Block whose datasize is the smallest among Blocks whose datasize is bigger than size, if no block satisfies, allocate a new space. As soon as we search a block whose datasize equals size, we could use this block because this must be the smallest node. That is ver important, which means we stop searching the block with same size, and return the first block whose blocksize is the same as the size that users give.
 
-##### Split and Remove
+### Split and Remove
 
 If we find a Node whose datasize is bigger than requested size, we need to edit the linked list to show the change. There are two situations here:
 
@@ -50,36 +52,36 @@ When datasize is larger than the size of metadata and requested size, we need to
 The whole process is to split the block first, which is similar to adding a new block into the linkedlist, and then we remove the block which is needless. 
 
 
-##### Free and merge
+### Free and merge
 
 This process is similar to adding a block in a linkedlist in an ascending order by point to the start of metadata. After adding the block, we have to consider if there is any blocks that can be merged, which means the former block's end is equal to current block's start. And merge with right block is the same. And it's better to merge right before merge left, which will not change the point to the start of the metadata.
 
 There is no different between first fit free and best fit free.
 
 
-##### `User` and `Manage` point *
+### `User` and `Manage` point *
 For malloc, we have to make sure that, the return point should be the point for user, which is `(void*)ptr + sizeof(block)`；For free, the argument point comes from user, and we need to manage the point by `(void*)ptr - sizeof(block)`
 
 
 
 
-##### Study of Performance Policy
+### Study of Performance Policy
 
 
-##### data_segment_size
+#### data_segment_size
 
 A global variable called `data_segment_size` and set it to 0 at beginning. Add sizeof(block) + size to it everytime calling `sbrk()`. 
 
-##### data_segment_free_space_size
+#### data_segment_free_space_size
 
 A global data called `data_segment_free_size` and set it to 0 at beginning. At last, search the freelist and add sizeof(block) + currBlock->blockSize to it from every block.
 
 
 
 
-##### Analysis of Performance
+### Analysis of Performance
 
-##### Results
+#### Results
 
 #NUM_ITERs 100 for small, 10000 for equal, 50 for large
 
@@ -91,15 +93,15 @@ A global data called `data_segment_free_size` and set it to 0 at beginning. At l
 | Small_size | 13.03s / 0.073                | 3.19s / 0.027                |
 | Large_size | 84.60s / 0.093                | 123.16s / 0.041              |
 
-##### Equal size
+#### Equal size
 
 There should be no difference between first fit and best fit for equal_size. Since all blocks are in equal size, the best fit should also be the first fit. Because all free spaces are in same size, the first block in the linked list will be enough for the requested space, we do not need to search through the whole linked list, therefore, the time for equal_size is quite short, and it takes similar time between first fit and best fit, because it's much more easier to find the block in same blockSize.
 
-##### Fragmentation is better for best fit
+#### Fragmentation is better for best fit
 
 There is a formula that `Fragmentation=free space/total space`, so the smaller the fragmentation, the better use of space. There are more larger spaces saved for data to use during the malloc process, because best fit always searches the minimum space that could fit requested size. However, first fit always give the first fit space out, which tends to split large space into small pieces, which causes a waste of space, because these small spaces may not be used later.
 
-##### Time difference between first fit and best fit 
+#### Time difference between first fit and best fit 
 
 Overall, large size will take more time than small size, which is easy to find.
 
