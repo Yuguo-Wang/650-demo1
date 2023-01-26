@@ -5,6 +5,7 @@
     
     
 <br>
+<br>
 
 
 ### Data Structure
@@ -61,15 +62,16 @@ This process is similar to adding a block in a linkedlist in an ascending order 
 There is no different between first fit free and best fit free.
 
 
-### `User` and `Manage` point *
+### User and Manage point 
 For malloc, we have to make sure that, the return point should be the point for user, which is `(void*)ptr + sizeof(block)`；For free, the argument point comes from user, and we need to manage the point by `(void*)ptr - sizeof(block)`
 
-
+<br>
+<br>
 
 
 ### Study of Performance Policy
 
-
+<br>
 #### data_segment_size
 
 A global variable called `data_segment_size` and set it to 0 at beginning. Add sizeof(block) + size to it everytime calling `sbrk()`. 
@@ -79,10 +81,10 @@ A global variable called `data_segment_size` and set it to 0 at beginning. Add s
 A global data called `data_segment_free_size` and set it to 0 at beginning. At last, search the freelist and add sizeof(block) + currBlock->blockSize to it from every block.
 
 
-
-
+<br>
+<br>
 ### Analysis of Performance
-
+<br>
 #### Results
 
 #NUM_ITERs 100 for small, 10000 for equal, 50 for large
